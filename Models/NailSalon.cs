@@ -25,7 +25,7 @@
         public List<NailTechnician>? NailTechnicians { get; set; } = new List<NailTechnician>();
         public List<BookingNail>? Bookings { get; set; } = new List<BookingNail>();
         public List<Reviews>? Reviews { get; set; } = new List<Reviews>();
-        public AppUser AppUser { get; set; }
+        public List<NailSalonFavorite> NailSalonFavorites { get; set; } = new List<NailSalonFavorite>(); 
 
     }
 }

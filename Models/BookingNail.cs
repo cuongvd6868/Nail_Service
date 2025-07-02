@@ -27,11 +27,12 @@ namespace Nail_Service.Models
         [ForeignKey("CustomerId")] 
         public AppUser? Customer { get; set; } 
         [ForeignKey("NailSalonId")]
-        public NailSalon? NailSalon { get; set; } 
-        public List<Payment>? Payments { get; set; }
+        public NailSalon? NailSalon { get; set; }
+        public Payment? Payment { get; set; }
         public List<Promotion>? Promotions { get; set; }
         public List<NailServiceD>? NailServices { get; set; } = new List<NailServiceD>();
         public List<Reviews>? Reviews { get; set; } = new List<Reviews>();
+        public List<AvailabilitySlot> AvailabilitySlots { get; set; } = new List<AvailabilitySlot> { };
     }
 
     public enum BookingStatus

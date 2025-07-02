@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Nail_Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5949174d43669630d4739c73b690fc206d8eda79")]
 [assembly: System.Reflection.AssemblyProductAttribute("Nail_Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Nail_Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
