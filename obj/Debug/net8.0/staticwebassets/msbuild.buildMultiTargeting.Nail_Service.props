@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Nail_Service.props" />
+</Project>
