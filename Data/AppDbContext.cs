@@ -157,6 +157,10 @@ namespace Nail_Service.Data
                 .WithMany(u => u.Posts)
                 .HasForeignKey(p => p.AuthorId);
 
+            modelBuilder.Entity<Reviews>()
+                .HasIndex(r => r.BookingNailId)
+                .IsUnique(); // Đảm bảo chỉ có một đánh giá cho mỗi BookingNailId
+
         }
     }
 }

@@ -15,6 +15,6 @@
         public int? BookingNailId { get; set; } // Có thể null nếu chưa được đặt
 
         public NailTechnician NailTechnician { get; set; }
-        public BookingNail BookingNail { get; set; } 
+        public BookingNail? BookingNail { get; set; } 
     }
 }

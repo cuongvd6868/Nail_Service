@@ -7,7 +7,7 @@
         public string UserId { get; set; }
 
         // Navigation properties
-        public virtual NailSalon NailSalon { get; set; }
-        public virtual AppUser User { get; set; }
+        public virtual NailSalon? NailSalon { get; set; }
+        public virtual AppUser? User { get; set; }
     }
 }

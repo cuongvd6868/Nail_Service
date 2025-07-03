@@ -6,6 +6,6 @@
         public string District { get; set; } 
         public string City { get; set; }
         public string Country { get; set; } 
-        public List<NailSalon> NailSalons { get; set; } = new List<NailSalon>();
+        public List<NailSalon>? NailSalons { get; set; } = new List<NailSalon>();
     }
 }

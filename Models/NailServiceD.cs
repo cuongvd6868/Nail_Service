@@ -19,9 +19,9 @@ namespace Nail_Service.Models
         public bool IsActive { get; set; } = true; 
         public int? NailServiceDCategoryId { get; set; } 
 
-        public NailServiceDCategory NailServiceDCategory { get; set; } 
-        public List<NailSalon> NailSalons { get; set; } 
-        public List<BookingNail> Bookings { get; set; } = new List<BookingNail>();
+        public NailServiceDCategory? NailServiceDCategory { get; set; } 
+        public List<NailSalon>? NailSalons { get; set; } 
+        public List<BookingNail>? Bookings { get; set; } = new List<BookingNail>();
 
     }
 }

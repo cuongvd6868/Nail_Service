@@ -25,9 +25,9 @@ namespace Nail_Service.Models
         public int NailSalonId { get; set; }
 
         // Navigation properties
-        public List<AvailabilitySlot> AvailabilitySlots { get; set; } = new List<AvailabilitySlot>(); // Danh sách các khung giờ làm việc   
-        public NailSalon NailSalon { get; set; }
-        public AppUser AppUser { get; set; }
-        public List<BookingNail> BookingNails { get; set; } = new List<BookingNail>(); // Danh sách các booking liên quan đến thợ này
+        public List<AvailabilitySlot>? AvailabilitySlots { get; set; } = new List<AvailabilitySlot>(); // Danh sách các khung giờ làm việc   
+        public NailSalon? NailSalon { get; set; }
+        public AppUser? AppUser { get; set; }
+        public List<BookingNail>? BookingNails { get; set; } = new List<BookingNail>(); // Danh sách các booking liên quan đến thợ này
     }
 }

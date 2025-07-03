@@ -32,7 +32,7 @@ namespace Nail_Service.Models
         public List<Promotion>? Promotions { get; set; }
         public List<NailServiceD>? NailServices { get; set; } = new List<NailServiceD>();
         public List<Reviews>? Reviews { get; set; } = new List<Reviews>();
-        public List<AvailabilitySlot> AvailabilitySlots { get; set; } = new List<AvailabilitySlot> { };
+        public List<AvailabilitySlot>? AvailabilitySlots { get; set; } = new List<AvailabilitySlot> { };
     }
 
     public enum BookingStatus

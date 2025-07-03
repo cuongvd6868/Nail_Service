@@ -36,7 +36,6 @@
 	  <Folder Include="DTOs\" />
 	  <Folder Include="Mappers\" />
 	  <Folder Include="Helper\" />
-	  <Folder Include="Repository\" />
 	</ItemGroup>
 
 </Project>
