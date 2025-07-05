@@ -56,6 +56,7 @@ namespace Nail_Service.Repository.Impl
                 .Include(n => n.Amenities)
                 .Include(n => n.NailTechnicians)
                 .Include(n => n.NailSalonImages)
+                .Include(n => n.NailServices)
                 .FirstOrDefaultAsync(n => n.Id == id)
                 ?? throw new Exception("Nail salon not found");
         }
@@ -67,20 +68,28 @@ namespace Nail_Service.Repository.Impl
                 .ToListAsync();
         }
 
-        public async Task<NailSalon> UpdateNailSalonAsync(NailSalon nailSalon)
+        public async Task<NailSalon> UpdateNailSalonAsync(int id, NailSalon nailSalon)
         {
-            if (nailSalon == null)
-            {
-                throw new Exception("Nail salon cannot be null");
-            }
-            var existingNailSalon = await _context.NailSalons.FindAsync(nailSalon.Id);
+            var existingNailSalon = await _context.NailSalons.FindAsync(id);
             if (existingNailSalon == null)
             {
                 throw new Exception("Nail salon not found");
             }
-            _context.Entry(existingNailSalon).CurrentValues.SetValues(nailSalon);
+            existingNailSalon.PhoneNumber = nailSalon.PhoneNumber;
+            existingNailSalon.Address = nailSalon.Address;
+            existingNailSalon.Name = nailSalon.Name;
+            existingNailSalon.Description = nailSalon.Description;
+            existingNailSalon.Email = nailSalon.Email;
+            existingNailSalon.OpeningTime = nailSalon.OpeningTime;
+            existingNailSalon.ClosingTime = nailSalon.ClosingTime;
+            existingNailSalon.DaysOpen = nailSalon.DaysOpen;
+            existingNailSalon.ImageUrl = nailSalon.ImageUrl;
+            existingNailSalon.LocationId = nailSalon.LocationId;
+
+            _context.Update(existingNailSalon);
             await _context.SaveChangesAsync();
             return existingNailSalon;
         }
-    }
+
+        }
 }

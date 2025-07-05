@@ -8,6 +8,8 @@ using Microsoft.OData.ModelBuilder;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using Nail_Service.Repository;
+using Nail_Service.Repository.Impl;
 
 using Microsoft.IdentityModel.Tokens;
 using VNPAY.NET;
@@ -43,10 +45,9 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 }).AddEntityFrameworkStores<AppDbContext>();
 
 // Dependency Injection
-
-
 // Đăng ký VNPay service
 builder.Services.AddSingleton<IVnpay, Vnpay>();
+builder.Services.AddScoped<INailSalonRepository, NailSalonRepository>();
 
 
 

@@ -306,3 +306,4 @@ D:\apinet\NetAPI\Nail_Service\Nail_Service\obj\Debug\net8.0\Nail_Service.pdb
 D:\apinet\NetAPI\Nail_Service\Nail_Service\obj\Debug\net8.0\Nail_Service.genruntimeconfig.cache
 D:\apinet\NetAPI\Nail_Service\Nail_Service\obj\Debug\net8.0\ref\Nail_Service.dll
 D:\apinet\NetAPI\Nail_Service\Nail_Service\obj\Debug\net8.0\Nail_Service.sourcelink.json
+D:\apinet\NetAPI\Nail_Service\Nail_Service\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
