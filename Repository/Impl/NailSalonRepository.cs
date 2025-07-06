@@ -45,7 +45,7 @@ namespace Nail_Service.Repository.Impl
         public async Task<IEnumerable<NailSalon>> GetAllNailSalonsAsync()
         {
             return await _context.NailSalons
-                .Include(n => n.Amenities)
+                //.Include(n => n.Amenities)
                 .Include(n => n.NailTechnicians)
                 .ToListAsync(); 
         }

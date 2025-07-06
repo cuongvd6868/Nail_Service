@@ -20,11 +20,12 @@ namespace Nail_Service.Controllers
         public async Task<IActionResult> GetAllNailSalons()
         {
             var nailSalons = await _nailSalonRepository.GetAllNailSalonsAsync();
+            var nailSalonDtos = nailSalons.Select(n => n.ToNailSalonViewDto());
             if (nailSalons == null || !nailSalons.Any())
             {
                 return NotFound(new { Message = "No nail salons found." });
             }
-            return Ok(nailSalons);
+            return Ok(nailSalonDtos);
         }
 
         [HttpGet("{id}")]

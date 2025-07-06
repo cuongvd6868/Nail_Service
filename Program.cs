@@ -17,17 +17,26 @@ using VNPAY.NET;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddOData(opt =>
+        opt.Select().Filter().OrderBy().Expand().SetMaxTop(100).Count()
+            .AddRouteComponents("odata", GetEdmModel()))
+    .AddJsonOptions(opt =>
+    {
+        opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    });
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 
 // Add services to the container
-builder.Services.AddControllers()
-    .AddOData(opt =>
-        opt.Select().Filter().OrderBy().Expand().SetMaxTop(100).Count()
-            .AddRouteComponents("odata", GetEdmModel()));
+//builder.Services.AddControllers()
+//    .AddOData(opt =>
+//        opt.Select().Filter().OrderBy().Expand().SetMaxTop(100).Count()
+//            .AddRouteComponents("odata", GetEdmModel()));
 
 
 // Database
@@ -81,10 +90,10 @@ builder.Services.AddAuthentication(options =>
 
 
 
-builder.Services.AddControllers().AddJsonOptions(opt => // khắc phục lỗi vòng lặp tuần hoàn, Nếu gặp đối tượng đã serialize trước đó → không serialize lại, mà dùng $ref
-{
-    opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-});
+//builder.Services.AddControllers().AddJsonOptions(opt => // khắc phục lỗi vòng lặp tuần hoàn, Nếu gặp đối tượng đã serialize trước đó → không serialize lại, mà dùng $ref
+//{
+//    opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+//});
 
 var app = builder.Build();
 

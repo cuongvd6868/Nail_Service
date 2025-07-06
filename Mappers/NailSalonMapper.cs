@@ -5,6 +5,28 @@ namespace Nail_Service.Mappers
 {
     public static class NailSalonMapper
     {
+        public static NailSalonViewDto ToNailSalonViewDto(this NailSalon nailSalon)
+        {
+            return new NailSalonViewDto
+            {
+                Id = nailSalon.Id,
+                Name = nailSalon.Name,
+                Address = nailSalon.Address,
+                PhoneNumber = nailSalon.PhoneNumber,
+                Email = nailSalon.Email,
+                Description = nailSalon.Description,
+                OpeningTime = nailSalon.OpeningTime,
+                ClosingTime = nailSalon.ClosingTime,
+                DaysOpen = nailSalon.DaysOpen,
+                ImageUrl = nailSalon.ImageUrl,
+                AverageRating = nailSalon.AverageRating,
+                NumberOfReviews = nailSalon.NumberOfReviews,
+                LocationId = nailSalon.LocationId,
+                //Amenities = nailSalon.Amenities ?? new List<Amenity>(),
+                NailServices = nailSalon.NailServices ?? new List<NailServiceD>(),
+                NailTechnicians = nailSalon.NailTechnicians ?? new List<NailTechnician>()
+            };
+        }
         public static NailSalon ToNailSalonFromCreateDto(this CreateNailSalonDto createNailSalonDto)
         {
             return new NailSalon
