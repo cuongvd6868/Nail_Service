@@ -111,6 +111,127 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Nail_Service.Controllers.NailSalonFavoriteController",
+    "Method": "GetFavoriteByUser",
+    "RelativePath": "api/nailsalonfavorite",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.NailSalonFavoriteController",
+    "Method": "RemoveFromFavorite",
+    "RelativePath": "api/nailsalonfavorite/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.NailSalonFavoriteController",
+    "Method": "AddToFavorite",
+    "RelativePath": "api/nailsalonfavorite/{nailSalonId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nailSalonId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.PostController",
+    "Method": "GetAllPosts",
+    "RelativePath": "api/post",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.PostController",
+    "Method": "CreatePost",
+    "RelativePath": "api/post",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "postDto",
+        "Type": "Nail_Service.DTOs.PostDto.CreatePostDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.PostController",
+    "Method": "GetPostById",
+    "RelativePath": "api/post/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.PostController",
+    "Method": "UpdatePost",
+    "RelativePath": "api/post/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "postDto",
+        "Type": "Nail_Service.DTOs.PostDto.UpdatePostDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.PostController",
+    "Method": "DeletePost",
+    "RelativePath": "api/post/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Microsoft.AspNetCore.OData.Routing.Controllers.MetadataController",
     "Method": "GetServiceDocument",
     "RelativePath": "odata",

@@ -55,14 +55,12 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 }).AddEntityFrameworkStores<AppDbContext>();
 
 // Dependency Injection
-// Đăng ký VNPay service
 builder.Services.AddSingleton<IVnpay, Vnpay>();
 builder.Services.AddScoped<INailSalonRepository, NailSalonRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ISendMailService, SendMailService>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
-
-
+builder.Services.AddScoped<INailSalonFavoriteRepository, NailSalonFavoriteRepository>();
 
 builder.Services.AddLogging(logging =>
 {
