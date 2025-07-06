@@ -60,5 +60,17 @@ namespace Nail_Service.Controllers
             }
             return BadRequest(new { Message = "Failed to remove nail salon to favorites." });
         }
+
+        [HttpGet("isfavorite/{nailSalonId}")]
+        public async Task<IActionResult> IsFavorite([FromRoute] int nailSalonId)
+        {
+            var userId = User.GetUserId();
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new { Message = "User is not authenticated." });
+            }
+            var isFavorite = await _nailSalonFavoriteRepository.IsFavoriteAsync(nailSalonId, userId);
+            return Ok(new { IsFavorite = isFavorite });
+        }
     }
 }

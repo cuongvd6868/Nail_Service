@@ -153,6 +153,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Nail_Service.Controllers.NailSalonFavoriteController",
+    "Method": "IsFavorite",
+    "RelativePath": "api/nailsalonfavorite/isfavorite/{nailSalonId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nailSalonId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Nail_Service.Controllers.PostController",
     "Method": "GetAllPosts",
     "RelativePath": "api/post",

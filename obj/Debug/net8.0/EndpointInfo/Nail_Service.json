@@ -1420,6 +1420,29 @@
         }
       }
     },
+    "/api/nailsalonfavorite/isfavorite/{nailSalonId}": {
+      "get": {
+        "tags": [
+          "NailSalonFavorite"
+        ],
+        "parameters": [
+          {
+            "name": "nailSalonId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/post": {
       "get": {
         "tags": [
