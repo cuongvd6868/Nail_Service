@@ -2320,6 +2320,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
           "nailSalonId": {
             "type": "integer",
             "format": "int32"

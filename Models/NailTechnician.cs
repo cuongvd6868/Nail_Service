@@ -20,6 +20,7 @@ namespace Nail_Service.Models
         public string Specialties { get; set; } // Các chuyên môn của thợ (ví dụ: "Nail Art", "Gel Nails", "Manicure/Pedicure")
         public double AverageRating { get; set; }
         public int NumberOfReviews { get; set; } 
+        public string Status { get; set; } = "Available"; // Trạng thái của thợ (ví dụ: "Available", "Busy", "On Leave")
 
         [Required]
         public int NailSalonId { get; set; }

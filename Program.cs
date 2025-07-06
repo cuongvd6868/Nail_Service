@@ -13,6 +13,7 @@ using Nail_Service.Repository.Impl;
 
 using Microsoft.IdentityModel.Tokens;
 using VNPAY.NET;
+using Nail_Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +58,9 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 // Đăng ký VNPay service
 builder.Services.AddSingleton<IVnpay, Vnpay>();
 builder.Services.AddScoped<INailSalonRepository, NailSalonRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ISendMailService, SendMailService>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 
 
