@@ -169,6 +169,122 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Nail_Service.Controllers.NailTechnicianController",
+    "Method": "GetAllNailTechnicians",
+    "RelativePath": "api/nailtechnician",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.NailTechnicianController",
+    "Method": "CreateNailTechnician",
+    "RelativePath": "api/nailtechnician",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nailTechnicianDto",
+        "Type": "Nail_Service.DTOs.NailTechnicianDto.CreateNailTechnicianDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.NailTechnicianController",
+    "Method": "GetNailTechnicianById",
+    "RelativePath": "api/nailtechnician/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.NailTechnicianController",
+    "Method": "DeleteNailTechnician",
+    "RelativePath": "api/nailtechnician/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.NailTechnicianController",
+    "Method": "UpdateNailTechnician",
+    "RelativePath": "api/nailtechnician/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "nailTechnicianDto",
+        "Type": "Nail_Service.DTOs.NailTechnicianDto.UpdateNailTechnicianDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.NailTechnicianController",
+    "Method": "UpdateTechnicianStatus",
+    "RelativePath": "api/nailtechnician/{id}/status",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "statusDto",
+        "Type": "Nail_Service.DTOs.NailTechnicianDto.StatusNailTechnicianDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.NailTechnicianController",
+    "Method": "GetTechniciansBySalonId",
+    "RelativePath": "api/nailtechnician/salon/{salonId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "salonId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Nail_Service.Controllers.PostController",
     "Method": "GetAllPosts",
     "RelativePath": "api/post",

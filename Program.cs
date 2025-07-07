@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Nail_Service.Repository;
 using Nail_Service.Repository.Impl;
-
 using Microsoft.IdentityModel.Tokens;
 using VNPAY.NET;
 using Nail_Service.Services;
@@ -61,6 +60,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ISendMailService, SendMailService>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<INailSalonFavoriteRepository, NailSalonFavoriteRepository>();
+builder.Services.AddScoped<INailTechnicianRepository, NailTechnicianRepository>();
 
 builder.Services.AddLogging(logging =>
 {
@@ -110,8 +110,8 @@ app.UseRouting();
 // CORS policy
 app.UseCors(builder =>
 {
-    builder.AllowAnyMethod() // Cho phép tất cả các phương thức HTTP (GET, POST, PUT, DELETE, v.v.)
-           .AllowAnyHeader() // Cho phép tất cả các header (Authorization, Content-Type..)
+    builder.AllowAnyMethod() 
+           .AllowAnyHeader() 
            .AllowCredentials() //	Cho phép gửi cookie hoặc Authorization header cùng với request.
            .SetIsOriginAllowed(origin => true); // Cho phép tất cả các origin
 });
