@@ -187,7 +187,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "nailTechnicianDto",
+        "Name": "createDto",
         "Type": "Nail_Service.DTOs.NailTechnicianDto.CreateNailTechnicianDto",
         "IsRequired": true
       }
@@ -240,7 +240,7 @@
         "IsRequired": true
       },
       {
-        "Name": "nailTechnicianDto",
+        "Name": "updateDto",
         "Type": "Nail_Service.DTOs.NailTechnicianDto.UpdateNailTechnicianDto",
         "IsRequired": true
       }
@@ -282,6 +282,64 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.PaymentsController",
+    "Method": "GetPaymentStatus",
+    "RelativePath": "api/payments/{paymentId}/status",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "paymentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.PaymentsController",
+    "Method": "GetPaymentsByBooking",
+    "RelativePath": "api/payments/booking/{bookingId}/payments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.PaymentsController",
+    "Method": "CreatePaymentUrl",
+    "RelativePath": "api/payments/create-url/{bookingId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookingId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.PaymentsController",
+    "Method": "VNPayCallback",
+    "RelativePath": "api/payments/vnpay-callback",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
