@@ -62,6 +62,7 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<INailSalonFavoriteRepository, NailSalonFavoriteRepository>();
 builder.Services.AddScoped<INailTechnicianRepository, NailTechnicianRepository>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<INailServiceDRepository, NailServiceDRepository>();
 
 builder.Services.AddLogging(logging =>
 {

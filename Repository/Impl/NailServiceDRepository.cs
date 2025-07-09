@@ -44,6 +44,13 @@ namespace Nail_Service.Repository.Impl
             return await _context.NailServices.FirstOrDefaultAsync(n => n.Id == id);
         }
 
+        public async Task<List<NailServiceD>> GetServicesBYIdAsync(List<int> serviceIds)
+        {
+            return await _context.NailServices
+                .Where(n => serviceIds.Contains(n.Id))
+                .ToListAsync();
+        }
+
         public async Task<NailServiceD> UpdateNailServiceD(NailServiceD nailServiceD)
         {
             if (nailServiceD == null)
