@@ -16,7 +16,8 @@ namespace Nail_Service.Repository.Impl
             _nailServiceDRepository = nailServiceDRepository;
         }
 
-        public async Task CreateBookingAsync(string userId, CreateBookingDto bookingDto)
+        // Thay đổi kiểu trả về từ Task thành Task<int> (hoặc kiểu Id của BookingNail)
+        public async Task<int> CreateBookingAsync(string userId, CreateBookingDto bookingDto)
         {
             var selectedServices = await _nailServiceDRepository.GetServicesBYIdAsync(bookingDto.SelectedServiceIds);
             if (selectedServices == null || !selectedServices.Any())
@@ -25,6 +26,7 @@ namespace Nail_Service.Repository.Impl
             }
             decimal totalPrice = selectedServices.Sum(s => s.Price); // total booking price = total nailservices price
             TimeSpan timeSpan = TimeSpan.FromMinutes(selectedServices.Sum(s => s.Duration)); // total booking duration = total nailservices duration
+
             var booking = new BookingNail
             {
                 BookingDateTime = bookingDto.BookingDateTime,
@@ -36,15 +38,23 @@ namespace Nail_Service.Repository.Impl
                 CustomerId = userId,
                 NailTechnicianId = bookingDto.NailTechnicianId,
                 NailSalonId = bookingDto.NailSalonId,
-                //NailServices = selectedServices.ToList()
             };
+
+            // Đảm bảo NailServices được khởi tạo trước khi thêm
+            // Nếu NailServices là một ICollection trong BookingNail, bạn cần đảm bảo nó không null
+            // Ví dụ: public virtual ICollection<NailService> NailServices { get; set; } = new HashSet<NailService>();
+            // trong class BookingNail.
 
             foreach (var service in selectedServices)
             {
                 booking.NailServices.Add(service);
             }
+
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
+
+            // RẤT QUAN TRỌNG: Trả về ID của booking mới được tạo
+            return booking.Id; // Giả sử Id là thuộc tính khóa chính của BookingNail và nó được tự động gán sau SaveChanges()
         }
 
         public async Task DeleteBookingAsync(int id)
@@ -121,5 +131,6 @@ namespace Nail_Service.Repository.Impl
             _context.Bookings.Update(bookingToUpdate);
             await _context.SaveChangesAsync();
         }
+
     }
 }

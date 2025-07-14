@@ -7,7 +7,7 @@ namespace Nail_Service.Repository
     {
         Task<IEnumerable<BookingNail>> GetAllBookingsAsync();
         Task<BookingNail> GetBookingByIdAsync(int id);
-        Task CreateBookingAsync(string userId, CreateBookingDto bookingDto);
+        Task<int> CreateBookingAsync(string userId, CreateBookingDto bookingDto);
         Task UpdateBookingAsync(int id, BookingNail booking);
         Task UpdateBookingStatusAsync(int id, BookingStatusUpdateDto bookingStatusDto);
         Task DeleteBookingAsync(int id);

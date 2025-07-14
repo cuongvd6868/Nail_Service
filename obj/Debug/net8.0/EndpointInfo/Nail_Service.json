@@ -1921,6 +1921,64 @@
         }
       }
     },
+    "/api/nailservice": {
+      "get": {
+        "tags": [
+          "NailService"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/nailservice/{id}": {
+      "get": {
+        "tags": [
+          "NailService"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/nailservice/nailsalon/{id}": {
+      "get": {
+        "tags": [
+          "NailService"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/nailtechnician": {
       "get": {
         "tags": [
@@ -2417,6 +2475,29 @@
       }
     },
     "/api/nailtechnician/salon/{salonId}": {
+      "get": {
+        "tags": [
+          "NailTechnician"
+        ],
+        "parameters": [
+          {
+            "name": "salonId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/nailtechnician/nailSalon/{salonId}": {
       "get": {
         "tags": [
           "NailTechnician"
@@ -4097,6 +4178,10 @@
           "numberOfReviews": {
             "type": "integer",
             "format": "int32"
+          },
+          "nailSalonAvatar": {
+            "type": "string",
+            "nullable": true
           },
           "locationId": {
             "type": "integer",

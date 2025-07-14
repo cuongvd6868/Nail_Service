@@ -10,5 +10,6 @@ namespace Nail_Service.Repository
         Task<NailServiceD> UpdateNailServiceD(NailServiceD nailServiceD);
         Task DeleteNailServiceD(int id);
         Task<List<NailServiceD>> GetServicesBYIdAsync(List<int> serviceIds);
+        Task<List<NailServiceD>> GetAllServicesBySalonId(int salonId);
     }
 }

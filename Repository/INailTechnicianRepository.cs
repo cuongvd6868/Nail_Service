@@ -11,6 +11,7 @@ namespace Nail_Service.Repository
         Task DeleteTechnicianAsync(int id);
         Task<IEnumerable<NailTechnician>> GetTechniciansBySalonIdAsync(int salonId);
         Task<bool> UpdateStatusAsync(string userId, int id, NailTechnician technician);
+        Task<IEnumerable<NailTechnician>> getNailTechniciansBySalonIdAsync(int salonId);
 
     }
 }

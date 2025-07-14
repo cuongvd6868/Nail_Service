@@ -76,6 +76,14 @@ namespace Nail_Service.Repository.Impl
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<NailTechnician>> getNailTechniciansBySalonIdAsync(int salonId)
+        {
+            return await _context.NailTechnicians
+                .Where(t => t.NailSalonId == salonId)
+                .Include(t => t.NailSalon)
+                .ToListAsync();
+        }
+
         public async Task<bool> UpdateStatusAsync(string userId, int id, NailTechnician technician)
         {
             var nailTechnician = await _context.NailTechnicians
@@ -90,6 +98,7 @@ namespace Nail_Service.Repository.Impl
 
             return await _context.SaveChangesAsync() > 0;
         }
+
 
     }
 }

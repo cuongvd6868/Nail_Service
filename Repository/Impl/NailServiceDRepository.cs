@@ -39,6 +39,13 @@ namespace Nail_Service.Repository.Impl
             return await _context.NailServices.ToListAsync();
         }
 
+        public Task<List<NailServiceD>> GetAllServicesBySalonId(int salonId)
+        {
+            return _context.NailServices
+                .Where(n => n.NailSalons.Any(s => s.Id == salonId))
+                .ToListAsync();
+        }
+
         public async Task<NailServiceD> GetNailServiceDById(int id)
         {
             return await _context.NailServices.FirstOrDefaultAsync(n => n.Id == id);

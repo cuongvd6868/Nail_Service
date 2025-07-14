@@ -8,6 +8,7 @@ using VNPAY.NET.Utilities;
 using Nail_Service.Data;
 using Nail_Service.Models;
 using Nail_Service.Repository;
+using System.Text.RegularExpressions;
 
 
 namespace Nail_Service.Controllers
@@ -92,24 +93,83 @@ namespace Nail_Service.Controllers
             }
         }
 
+
         [HttpGet("vnpay-callback")]
         [AllowAnonymous]
         public async Task<IActionResult> VNPayCallback()
         {
+            var queryString = string.Join("&", Request.Query.Select(q => $"{q.Key}={q.Value}"));
+            _logger.LogInformation("VNPAY Callback Received. Query Parameters: {Query}", queryString);
+
             try
             {
                 var result = _vnpay.GetPaymentResult(Request.Query);
-                int bookingId = ExtractBookingIdFromOrderInfo(result.Description);
 
+                _logger.LogInformation(
+                    "VNPAY Result: IsSuccess={IsSuccess}, TransactionStatus={TransactionStatus}, VnpayTransactionId={VnpayTransactionId}",
+                    result.IsSuccess,
+                    result.TransactionStatus?.Description,
+                    result.VnpayTransactionId
+                );
+
+                // ❌ Giao dịch không thành công
+                if (!result.IsSuccess)
+                {
+                    string errorMessage = result.TransactionStatus?.Description ?? result.Description ?? "Giao dịch không thành công";
+                    _logger.LogWarning("Thanh toán thất bại từ VNPAY: {ErrorMessage}", errorMessage);
+
+                    var failedUrl = $"http://localhost:3000/payment/failed" +
+                                    $"?message={Uri.EscapeDataString($"Giao dịch VNPAY thất bại: {errorMessage}")}";
+                    return RedirectPermanent(failedUrl);
+                }
+
+                // ✅ Lấy OrderInfo từ query string
+                string orderInfo = Request.Query["vnp_OrderInfo"];
+                if (string.IsNullOrEmpty(orderInfo))
+                {
+                    _logger.LogError("VNPAY Callback: vnp_OrderInfo trống. Không thể trích xuất Booking ID.");
+                    var errorUrl = $"http://localhost:3000/payment/failed" +
+                                   $"?message={Uri.EscapeDataString("Lỗi xử lý: Không có thông tin đơn hàng từ VNPAY")}";
+                    return RedirectPermanent(errorUrl);
+                }
+
+                // ✅ Trích xuất Booking ID bằng Regex
+                int bookingId = ExtractBookingIdFromOrderInfo(orderInfo);
+                if (bookingId == 0)
+                {
+                    _logger.LogError("VNPAY Callback: Không thể trích xuất Booking ID hợp lệ từ vnp_OrderInfo: {OrderInfo}", orderInfo);
+                    var invalidIdUrl = $"http://localhost:3000/payment/failed" +
+                                        $"?message={Uri.EscapeDataString("Lỗi xử lý: Booking ID trong thông tin đơn hàng không hợp lệ")}";
+                    return RedirectPermanent(invalidIdUrl);
+                }
+
+                _logger.LogInformation("VNPAY Callback: Đã trích xuất Booking ID: {BookingId} từ vnp_OrderInfo: {OrderInfo}", bookingId, orderInfo);
+
+                // 🔎 Tìm đơn đặt
                 var booking = await _bookingRepository.GetBookingByIdAsync(bookingId);
                 if (booking == null)
                 {
-                    return Ok(new { Message = "Không tìm thấy đơn đặt", VNPayResult = result });
+                    _logger.LogWarning("VNPAY Callback: Không tìm thấy đơn đặt với ID: {BookingId}", bookingId);
+                    var notFoundUrl = $"http://localhost:3000/payment/failed" +
+                                        $"?message={Uri.EscapeDataString($"Không tìm thấy đơn đặt (ID: {bookingId}) trong hệ thống")}";
+                    return RedirectPermanent(notFoundUrl);
                 }
 
+                // ✅ Đã thanh toán trước đó
+                if (booking.Status == BookingStatus.Completed)
+                {
+                    _logger.LogInformation("Booking ID {BookingId} đã ở trạng thái Completed. Bỏ qua xử lý trùng lặp.", bookingId);
+                    var alreadyCompletedUrl = $"http://localhost:3000/payment/success" +
+                                              $"?bookingId={bookingId}&amount={booking.TotalPrice}&message={Uri.EscapeDataString("Đơn hàng đã được thanh toán trước đó")}";
+                    return RedirectPermanent(alreadyCompletedUrl);
+                }
+
+                // ✅ Cập nhật trạng thái booking
                 booking.Status = BookingStatus.Completed;
                 await _bookingRepository.UpdateBookingAsync(booking.Id, booking);
+                _logger.LogInformation("Đã cập nhật trạng thái Booking ID {BookingId} thành {Status}.", booking.Id, BookingStatus.Completed);
 
+                // ✅ Lưu bản ghi thanh toán
                 var payment = new Payment
                 {
                     BookingId = bookingId,
@@ -122,77 +182,24 @@ namespace Nail_Service.Controllers
 
                 _context.Payments.Add(payment);
                 await _context.SaveChangesAsync();
+                _logger.LogInformation("Đã lưu bản ghi thanh toán cho Booking ID {BookingId}, Payment ID: {PaymentId}.", bookingId, payment.Id);
 
-                return Ok(new { Message = "Xử lý callback thành công", BookingId = bookingId, VNPayResult = result });
+                // ✅ Chuyển hướng thành công
+                var successUrl = $"http://localhost:3000/payment/success" +
+                                 $"?bookingId={bookingId}&amount={booking.TotalPrice}";
+                _logger.LogInformation("Chuyển hướng đến trang thành công: {SuccessUrl}", successUrl);
+                return RedirectPermanent(successUrl);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Lỗi khi xử lý callback VNPay");
-                return Ok(new { Message = "Lỗi khi xử lý callback VNPay", Error = ex.Message });
+                var queryStringInCatch = string.Join("&", Request.Query.Select(q => $"{q.Key}={q.Value}"));
+                _logger.LogError(ex, "Lỗi nghiêm trọng khi xử lý callback VNPay. Toàn bộ Query Parameters: {Query}", queryStringInCatch);
+
+                var errorUrl = $"http://localhost:3000/payment/failed" +
+                               $"?message={Uri.EscapeDataString("Lỗi hệ thống không xác định khi xử lý thanh toán. Vui lòng liên hệ hỗ trợ.")}";
+                return RedirectPermanent(errorUrl);
             }
         }
-
-        //[HttpGet("vnpay-callback")]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> VNPayCallback()
-        //{
-        //    try
-        //    {
-        //        var result = _vnpay.GetPaymentResult(Request.Query);
-        //        if (!result.IsSuccess)
-        //        {
-        //            _logger.LogWarning("Thanh toán thất bại: {Description}", result.TransactionStatus.Description);
-
-        //            var failedUrl = $"{_configuration["ClientUrl"]}/payment/failed" +
-        //                            $"?message={Uri.EscapeDataString(result.TransactionStatus.Description)}";
-
-        //            return RedirectPermanent(failedUrl);
-        //        }
-
-        //        int bookingId = ExtractBookingIdFromOrderInfo(result.PaymentResponse.Description);
-
-        //        var booking = await _bookingRepository.GetBookingByIdAsync(bookingId);
-        //        if (booking == null)
-        //        {
-        //            var notFoundUrl = $"{_configuration["ClientUrl"]}/payment/failed" +
-        //                              $"?message={Uri.EscapeDataString("Không tìm thấy đơn đặt phòng")}";
-
-        //            return RedirectPermanent(notFoundUrl);
-        //        }
-
-        //        booking.Status = BookingStatus.Completed;
-        //        await _bookingRepository.UpdateBookingAsync(booking.Id, booking);
-
-        //        var payment = new Payment
-        //        {
-        //            BookingId = bookingId,
-        //            Amount = booking.TotalPrice,
-        //            PaymentDate = DateTime.Now,
-        //            PaymentMethod = "VNPay",
-        //            Status = "Success",
-        //            TransactionId = result.VnpayTransactionId.ToString(),
-        //        };
-
-        //        _context.Payments.Add(payment);
-        //        await _context.SaveChangesAsync();
-
-        //        var successUrl = $"{_configuration["ClientUrl"]}/payment/success" +
-        //                         $"?bookingId={bookingId}&amount={booking.TotalPrice}";
-
-        //        return RedirectPermanent(successUrl);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Lỗi khi xử lý callback VNPay");
-
-        //        var errorUrl = $"{_configuration["ClientUrl"]}/payment/error" +
-        //                       $"?message={Uri.EscapeDataString("Lỗi hệ thống khi xử lý thanh toán")}";
-
-        //        return RedirectPermanent(errorUrl);
-        //    }
-        //}
-
-
 
 
         [HttpGet("{paymentId}/status")]
@@ -262,16 +269,17 @@ namespace Nail_Service.Controllers
             }
         }
 
-        private int ExtractBookingIdFromOrderInfo(string description)
+        private int ExtractBookingIdFromOrderInfo(string orderInfo)
         {
-            // Ví dụ: "Thanh toán dịch vụ nail #123"
-            var parts = description.Split('#');
-            if (parts.Length == 2 && int.TryParse(parts[1], out int id))
+            // Ví dụ: "Thanh toán dịch vụ nail #22"
+            var match = Regex.Match(orderInfo, @"#(\d+)");
+            if (match.Success && int.TryParse(match.Groups[1].Value, out int bookingId))
             {
-                return id;
+                return bookingId;
             }
             return 0;
         }
+
 
     }
 }

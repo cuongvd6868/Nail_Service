@@ -232,6 +232,48 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Nail_Service.Controllers.NailServiceController",
+    "Method": "GetAllNailServices",
+    "RelativePath": "api/nailservice",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.NailServiceController",
+    "Method": "GetNailServiceById",
+    "RelativePath": "api/nailservice/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.NailServiceController",
+    "Method": "GetAllServicesBySalonId",
+    "RelativePath": "api/nailservice/nailsalon/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Nail_Service.Controllers.NailTechnicianController",
     "Method": "GetAllNailTechnicians",
     "RelativePath": "api/nailtechnician",
@@ -334,6 +376,22 @@
   {
     "ContainingType": "Nail_Service.Controllers.NailTechnicianController",
     "Method": "GetTechniciansBySalonId",
+    "RelativePath": "api/nailtechnician/nailSalon/{salonId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "salonId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Nail_Service.Controllers.NailTechnicianController",
+    "Method": "GetTechniciansIdBySalonId",
     "RelativePath": "api/nailtechnician/salon/{salonId}",
     "HttpMethod": "GET",
     "IsController": true,

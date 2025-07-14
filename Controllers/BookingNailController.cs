@@ -57,13 +57,23 @@ namespace Nail_Service.Controllers
             }
             try
             {
-                await _bookingRepository.CreateBookingAsync(userId, bookingDto);
-                return Ok(bookingDto);
+                // Gọi phương thức repository và lưu ID được trả về
+                var newBookingId = await _bookingRepository.CreateBookingAsync(userId, bookingDto);
+
+                return Ok(new
+                {
+                    id = newBookingId, // Trả về ID mới được lấy từ repository
+                    message = "Booking created successfully.",
+                });
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(new { Message = ex.Message });
             }
+            // catch (Exception ex) // Thêm catch tổng quát hơn nếu cần để bắt các lỗi khác
+            // {
+            //     return StatusCode(500, new { Message = "An error occurred while creating the booking.", Error = ex.Message });
+            // }
         }
 
         [HttpPatch("{id}/status")]

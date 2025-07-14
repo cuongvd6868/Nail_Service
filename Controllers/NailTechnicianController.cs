@@ -31,9 +31,16 @@ namespace Nail_Service.Controllers
         }
 
         [HttpGet("salon/{salonId}")]
-        public async Task<IActionResult> GetTechniciansBySalonId(int salonId)
+        public async Task<IActionResult> GetTechniciansIdBySalonId(int salonId)
         {
             var nailTechnicians = await _nailTechnicianRepository.GetTechniciansBySalonIdAsync(salonId);
+            return Ok(nailTechnicians);
+        }
+
+        [HttpGet("nailSalon/{salonId}")]
+        public async Task<IActionResult> GetTechniciansBySalonId(int salonId)
+        {
+            var nailTechnicians = await _nailTechnicianRepository.getNailTechniciansBySalonIdAsync(salonId);
             return Ok(nailTechnicians);
         }
 
@@ -102,6 +109,8 @@ namespace Nail_Service.Controllers
             }
             return NoContent();
         }
+
+
 
 
     }

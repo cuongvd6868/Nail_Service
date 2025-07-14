@@ -15,6 +15,7 @@
         public string ImageUrl { get; set; } 
         public double AverageRating { get; set; } 
         public int NumberOfReviews { get; set; } 
+        public string? NailSalonAvatar { get; set; } // URL của ảnh đại diện của Nail Salon
         public int LocationId { get; set; }
 
         // navigation properties

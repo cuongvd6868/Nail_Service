@@ -13,7 +13,7 @@ namespace Nail_Service.Models
         public string Description { get; set; } 
         [Required]
         [Column(TypeName = "decimal(18, 2)")] 
-        public decimal Price { get; set; } 
+        public decimal Price { get; set; }  
         public int Duration { get; set; } // Thời gian thực hiện dịch vụ tính bằng phút
         public string ImageUrl { get; set; } 
         public bool IsActive { get; set; } = true; 
